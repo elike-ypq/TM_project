@@ -536,7 +536,7 @@ MEM_FILLOUT_MODE:
 	;CALL	SET_EE_TM_FUN
 ;********************************
 	B0BTS1		FT0ENB
-	JMP			$+5
+	JMP			$+4
 	CLR			T0C
 	B0BCLR		FT0IRQ
 	B0BCLR		FT0IEN
@@ -647,6 +647,7 @@ MOVE_DATA_TO_EEPROM:
 	JMP			MOVE_DATA_TO_EEPROM
 ;*********************************************
 	B0BCLR		SCL_CONT
+	B0BCLR		SDA_CONT
 	RET
 ;**************************************
 PUT_DATA_INTO_TM_FUN:
@@ -863,6 +864,7 @@ GET_DATA_FROM_EE_FUN:
 ;*************************************
 	CALL		DELAY_SHORT
 	B0BCLR		SCL_CONT
+	B0BCLR		SDA_CONT
 	RET
 ;************************************************
 I2C_EEROR:
