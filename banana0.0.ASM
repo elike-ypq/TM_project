@@ -1120,9 +1120,9 @@ SYS_INIT_FUN:
 	B0MOV		P2M,A
 	MOV			A,#0X35
 	B0MOV		P2,A
-	;up resistor for p2.1
-	;MOV			A,#0X02
-	;B0MOV		P2UR,A
+	;up resistor for p2.4
+	MOV			A,#0X10
+	B0MOV		P2UR,A
 	MOV			A,#0X01
 	B0MOV		P1M,A
 	CLR			P1
