@@ -21,5 +21,9 @@ Current time={INITIAL_TIME_H,INITIAL_TIME_L}+{FRONT_DELAY_TIME}+{SAMPLE_TIME_GAP
 
 TEMPERATURE={*CURRENT_TEMPERATURE_ADD_H}.{*CURRENT_TEMPERATURE_ADD_L} <sup>o</sup>C
 
-## Special addresee for Bluetooth
+## Special addresse for Bluetooth
 from 0x1FE0 to 0x1FF5
+
+## Sample time can be variated with temperature
+when the timeperature is > 48<sup>o</sup>C or < 5<sup>o</sup>C
+T_sample=1/2*SAMPLE_TIME_GAP
