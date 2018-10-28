@@ -20,7 +20,7 @@ CHIP		SN8P2501D
 	RAM_COUNT		EQU	48
 	TM_DATA_H		EQU	0X34	;ADDR OF THE TEMPEATURE	OF TM
 	TM_DATA_L		EQU	0X00
-	TIME_GAP		EQU	0X78	;0X78
+	TIME_GAP		EQU	0X0A	;10S
 	T0_TDR			EQU	0X01
 	TMR_ADD 		EQU	0X3D
 	TMW_ADD			EQU	0X3C
@@ -441,9 +441,9 @@ I2CSLAVE_MODE:
 ;***************************************
 ;***************************************
 ;***************************************
-    B0BSET	S_TM_EE_IO
-	CALL	TM_I2C_EXIST_FUN
-	B0BCLR	S_TM_EE_IO
+    ;B0BSET	S_TM_EE_IO
+	;CALL	TM_I2C_EXIST_FUN
+	;B0BCLR	S_TM_EE_IO
 ;****************************************
 ;***************************************
 ;***************************************
@@ -808,6 +808,14 @@ WAIT_TM_INIT:
 	CALL 		TMDATA_ASK
 	MOV 		A,DATA_OUT
 	MOV 		DATAL,A		
+;//////////////////////DEBUG////////////////////
+	CALL		I2C_END_TM
+	CALL		DELAY_LONG
+	CALL		I2C_START_TM
+;***********************************************
+	MOV 		A,#0X3C
+	MOV 		DATA_IN,A
+	CALL 		TMADDRESS_ASK
 ;**************END*******************************
 	CALL		I2C_END_TM
 	CALL		DELAY_SHORT
@@ -907,10 +915,11 @@ I2C_START_TM:
 	RET
 I2C_END_TM:
 	B0BCLR 		SDATA_IO
-	CALL 		DELAY_MINI
+	CALL 		DELAY_SHORT
 	B0BCLR		SCL_IO
-	CALL		DELAY_MINI
+	CALL		DELAY_SHORT
 	B0BSET 		SDATA_IO
+	CALL		DELAY_MINI
 	CALL		DELAY_MINI
 	B0BSET 		SCL_IO
 	RET
@@ -1235,14 +1244,15 @@ WAIT_TM_INIT_E:
 ;***********************************************
 	MOV 		A,#0X3C
 	MOV 		DATA_IN,A
-	CALL 		TMADDRESS_NO_ASK
+	CALL 		TMADDRESS_ASK
 	BTS0		TM_I2C_EEROR
 	JMP			END_TM_E
 ;**************END*******************************
 	CALL		I2C_END_TM
-	CALL		DELAY_LONG
+	CALL		DELAY_SHORT
 	B0BCLR		S_VDD_VCC_IO
 	B0BCLR		SDATA_IO
+	CALL 		DELAY_SHORT
 END_TM_E:
 	BCLR		TM_I2C_EEROR
 ;	B0BCLR 		VTM_IO
