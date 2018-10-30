@@ -752,6 +752,15 @@ WAIT_TM_INIT_S:
 	CALL 		TMADDRESS_ASK
 	CALL		DELAY_SHORT
 ;**************END*******************************
+;//////////////////////DEBUG////////////////////
+	CALL		I2C_END_TM
+	CALL		DELAY_LONG
+	CALL		I2C_START_TM
+;***********************************************
+	MOV 		A,#0X3C
+	MOV 		DATA_IN,A
+	CALL 		TMADDRESS_ASK
+;**************END*******************************
 	CALL		I2C_END_TM
 	CALL		DELAY_LONG
 	CALL		DELAY_LONG
@@ -836,6 +845,15 @@ WAIT_TM_INIT:
 	CALL 		TMDATA_ASK
 	MOV 		A,DATA_OUT
 	MOV 		DATAL,A		
+;//////////////////////DEBUG////////////////////
+	CALL		I2C_END_TM
+	CALL		DELAY_LONG
+	CALL		I2C_START_TM
+;***********************************************
+	MOV 		A,#0X3C
+	MOV 		DATA_IN,A
+	CALL 		TMADDRESS_ASK
+;**************END*******************************
 ;**************END*******************************
 	CALL		I2C_END_TM
 	CALL		DELAY_SHORT
