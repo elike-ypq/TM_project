@@ -714,6 +714,16 @@ WAIT_TM_INIT_S:
 	MOV 		DATA_IN,A
 	CALL 		TMADDRESS_ASK
 	CALL		DELAY_SHORT
+;//////////////////////DEBUG////////////////////
+	CALL		I2C_END_TM
+	CALL		DELAY_LONG
+	CALL		I2C_START_TM
+;***********************************************
+	MOV 		A,#0X3C
+	MOV 		DATA_IN,A
+	CALL 		TMADDRESS_ASK
+	CALL		DELAY_SHORT
+;**************END*******************************
 ;**************END*******************************
 	CALL		I2C_END_TM
 	CALL		DELAY_LONG
@@ -798,7 +808,18 @@ WAIT_TM_INIT:
 	BSET 		ASK_FLAG
 	CALL 		TMDATA_ASK
 	MOV 		A,DATA_OUT
-	MOV 		DATAL,A		
+	MOV 		DATAL,A	
+	CALL		DELAY_SHORT	
+;//////////////////////DEBUG////////////////////
+	CALL		I2C_END_TM
+	CALL		DELAY_LONG
+	CALL		I2C_START_TM
+;***********************************************
+	MOV 		A,#0X3C
+	MOV 		DATA_IN,A
+	CALL 		TMADDRESS_ASK
+	CALL		DELAY_SHORT
+;**************END*******************************
 ;**************END*******************************
 	CALL		I2C_END_TM
 	CALL		DELAY_SHORT
@@ -809,8 +830,6 @@ WAIT_TM_INIT:
 	B0BCLR 		VTM_IO
 	MOV			A,#0X00
 	CMPRS		A,DATAH
-	JMP			$+4
-	CMPRS		A,DATAL
 	JMP			$+2
 	JMP			TM_I2C_WORK_LOOP
 	BSET		READ_LED_FLAG
@@ -1095,8 +1114,8 @@ SYS_INIT_FUN:
 	MOV			A,#0X35
 	B0MOV		P2,A
 	;up resistor for p2.1
-	;MOV			A,#0X02
-	;B0MOV		P2UR,A
+	MOV			A,#0XFF
+	B0MOV		P2UR,A
 	MOV			A,#0X01
 	B0MOV		P1M,A
 	CLR			P1
